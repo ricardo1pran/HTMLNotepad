@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Notepad</title>
+    <style>
+        body,
+        html {
+            height: 100%;
+            margin: 0;
+            font-family: monospace;
+        }
+
+        #menuBar {
+            background-color: #f0f0f0;
+            padding: 5px;
+        }
+
+        #menuBar ul {
+            list-style: none;
+            margin: 0;
+            padding: 5px;
+        }
+
+        #menuBar>ul>li {
+            display: inline;
+            margin-right: 10px;
+            position: relative;
+        }
+
+        #menuBar li ul {
+            display: none;
+            position: absolute;
+            background-color: #f0f0f0;
+            left: 0;
+            top: 100%;
+            width: 100px;
+            border: 1px solid #ccc;
+        }
+
+        #menuBar li:hover ul {
+            display: block;
+        }
+
+        #menuBar li {
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+
+        #menuBar li:hover {
+            background-color: #e0e0e0;
+        }
+
+        #menuBar #title {
+            float: right;
+            line-height: 9px;
+            cursor: default;
+            font-weight: bold;
+        }
+
+        #menuBar #title:hover {
+            /* Prevent hover effect on the title, including background color changes */
+            background-color: #f0f0f0;
+        }
+
+        #textArea {
+            width: 100vw;
+            height: calc(100vh - 30px);
+            padding: 10px;
+            border: 1px solid #ccc;
+            resize: none;
+            box-sizing: border-box;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="menuBar">
+        <ul>
+            <li>File
+                <ul>
+                    <li onclick="save()">Save</li>
+                    <li onclick="exit()">Exit</li>
+                </ul>
+            </li>
+            <li>Help
+                <ul>
+                    <li onclick="about()">About</li>
+                </ul>
+            </li>
+            <li id="title">Web Notepad v1.0</li>
+        </ul>
+    </div>
+
+    <textarea id="textArea"></textarea>
+
+    <script>
+        function save() {
+            const textToSave = document.getElementById("textArea").value;
+            const blob = new Blob([textToSave], { type: "text/plain" });
+            const url = window.URL.createObjectURL(blob);
+
+            // Create a hidden anchor element for saving file
+            const a = document.createElement("a");
+            a.style.display = "none";
+            a.href = url;
+            a.download
+                = "textFile.txt"; // For now hardcoded because of browser limitation to call file save dialog (I'm still learning on it).
+
+            // Append the anchor to the document and trigger the download
+            document.body.appendChild(a);
+            a.click();
+
+            // Clean up
+            window.URL.revokeObjectURL(url);
+            document.body.removeChild(a);
+        }
+
+        function exit() {
+            if (confirm("There might be unsaved changes! Are you sure you want to exit?")) {
+                window.close();
+            }
+        }
+
+        function about() {
+            alert("HTML Notepad v1.0\nBy Ricardo1pran\nSource on github.com/ricardo1pran/HTMLNotepad\n\nShould work even on semi-old browsers.");
+        }
+    </script>
+</body>
+
+</html>

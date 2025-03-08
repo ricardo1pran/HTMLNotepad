@@ -18,9 +18,9 @@ In fact, I made this because my ChromiumOS VM can't even install the Text extens
 
 - Has menu bar that looks like desktop app's menu bar (not simple buttons)
 
-- Work in most semi-modern to modern browsers
+- Works in most semi-modern to modern browsers
 
-- Could save to a .txt file in any OS and browser
+- Could save as .txt file in any OS and browser
 
 ---
 
